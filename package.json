@@ -1,0 +1,22 @@
+{
+  "name": "se3316_lab3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mginham/https---github.com-ShaimaaAliECE-lab3-mginham.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mginham/https---github.com-ShaimaaAliECE-lab3-mginham/issues"
+  },
+  "homepage": "https://github.com/mginham/https---github.com-ShaimaaAliECE-lab3-mginham#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
