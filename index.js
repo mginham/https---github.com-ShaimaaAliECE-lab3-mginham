@@ -7,233 +7,262 @@ app.use(express.static('static'))
 
 // Dynamic handling //
 
-// 
-app.get("/add-avail", (req,res) => {
-    let conn = newConn();
-    conn.connect();
+// Add guest availability
+app.get("/add-availability", (req, res) => {
+    let conn = newConn(); // Create the connection
+    conn.connect(); // Establish the connection
 
-        if (req.query.time1 != 1)
-            req.query.time1 = 0;
-        if (req.query.time2 != 1)
-            req.query.time2 = 0;
-        if (req.query.time3 != 1)
-            req.query.time3 = 0;
-        if (req.query.time4 != 1)
-            req.query.time4 = 0;
-        if (req.query.time5 != 1)
-            req.query.time5 = 0;
-        if (req.query.time6 != 1)
-            req.query.time6 = 0;
-        if (req.query.time7 != 1)
-            req.query.time7 = 0;
-        if (req.query.time8 != 1)
-            req.query.time8 = 0;
-        if (req.query.time9 != 1)
-            req.query.time9 = 0;
-        if (req.query.time10 != 1)
-            req.query.time10 = 0;
+    //If not available, mark false
+    if (req.query.timeslot1 != 1) {
+        req.query.timeslot1 = 0;
+    }
+    if (req.query.timeslot2 != 1) {
+        req.query.timeslot2 = 0;
+    }
+    if (req.query.timeslot3 != 1) {
+        req.query.timeslot3 = 0;
+    }
+    if (req.query.timeslot4 != 1) {
+        req.query.timeslot4 = 0;
+    }
+    if (req.query.timeslot5 != 1) {
+        req.query.timeslot5 = 0;
+    }
+    if (req.query.timeslot6 != 1) {
+        req.query.timeslot6 = 0;
+    }
+    if (req.query.timeslot7 != 1) {
+        req.query.timeslot7 = 0;
+    }
+    if (req.query.timeslot8 != 1) {
+        req.query.timeslot8 = 0;
+    }
+    if (req.query.timeslot9 != 1) {
+        req.query.timeslot9 = 0;
+    }
+    if (req.query.timeslot10 != 1) {
+        req.query.timeslot10 = 0;
+    }
 
-    conn.query(`insert into Bookings values('${req.query.name}','${req.query.time1}','${req.query.time2}','${req.query.time3}','${req.query.time4}','${req.query.time5}','${req.query.time6}','${req.query.time7}','${req.query.time8}','${req.query.time9}','${req.query.time10}')`
-        , (err,rows,fields) => {
-            console.log(req.query.time1);
-            res.redirect('/times');
-        });
+    // Insert the availablity into the table
+    conn.query(`INSERT INTO Availability values
+                (
+                    '${req.query.guestName}',
+                    '${req.query.timeslot1}',
+                    '${req.query.timeslot2}',
+                    '${req.query.timeslot3}',
+                    '${req.query.timeslot4}',
+                    '${req.query.timeslot5}',
+                    '${req.query.timeslot6}',
+                    '${req.query.timeslot7}',
+                    '${req.query.timeslot8}',
+                    '${req.query.timeslot9}',
+                    '${req.query.timeslot10}'
+                )`, 
+        (err, rows, fields) => {
+            // If errors are found in the table, display the error, otherwise display that the data was inserted successfully
+            if(err) {
+                console.log(err);
+            }
+            else {
+                console.log('Row inserted');
+            }
+            
+            // Navigate back to the calendar 
+            res.redirect('/calendar');
+        }
+    );
 
-    conn.end();
+    conn.end(); // End the connection
 })
 
-app.get("/change-times", (req,res) => {
-    let conn = newConn();
-    conn.connect();
+// Edit the timeslots
+app.get("/edit-timeslots", (req, res) => {
+    let conn = newConn(); // Create the connection
+    conn.connect(); // Establish the connection
     
-    conn.query(`alter table Bookings change time1 '${req.query.time1} tinytint)`
-        , (err,rows,fields) => {
+    conn.query(`ALTER TABLE Availability change timeslot1 '${req.query.timeslot1} tinytint)`, 
+        (err, rows, fields) => {
             res.redirect('/admin');
-        });
+        }
+    );
 
-    conn.query(`alter table Bookings change time2 '${req.query.time2} tinytint)`
-    , (err,rows,fields) => {
-        res.redirect('/admin');
-    });
+    conn.query(`ALTER TABLE Availability change timeslot2 '${req.query.timeslot2} tinytint)`, 
+        (err, rows, fields) => {
+            res.redirect('/admin');
+        }
+    );
 
-    conn.query(`alter table Bookings change time3 '${req.query.time3} tinytint)`
-    , (err,rows,fields) => {
-        res.redirect('/admin');
-    });
+    conn.query(`ALTER TABLE Availability change timeslot3 '${req.query.timeslot3} tinytint)`, 
+        (err, rows, fields) => {
+            res.redirect('/admin');
+        }
+    );
 
-    conn.query(`alter table Bookings change time4 '${req.query.time4} tinytint)`
-    , (err,rows,fields) => {
-        res.redirect('/admin');
-    });
+    conn.query(`ALTER TABLE Availability change timeslot4 '${req.query.timeslot4} tinytint)`, 
+        (err, rows, fields) => {
+            res.redirect('/admin');
+        }
+    );
 
-    conn.query(`alter table Bookings change time5 '${req.query.time5} tinytint)`
-    , (err,rows,fields) => {
-        res.redirect('/admin');
-    });
+    conn.query(`ALTER TABLE Availability change timeslot5 '${req.query.timeslot5} tinytint)`, 
+        (err, rows, fields) => {
+            res.redirect('/admin');
+        }
+    );
 
-    conn.query(`alter table Bookings change time6 '${req.query.time6} tinytint)`
-    , (err,rows,fields) => {
-        res.redirect('/admin');
-    });
+    conn.query(`ALTER TABLE Availability change timeslot6 '${req.query.timeslot6} tinytint)`, 
+        (err, rows, fields) => {
+            res.redirect('/admin');
+        }
+    );
 
-    conn.query(`alter table Bookings change time7 '${req.query.time7} tinytint)`
-    , (err,rows,fields) => {
-        res.redirect('/admin');
-    });
+    conn.query(`ALTER TABLE Availability change timeslot7 '${req.query.timeslot7} tinytint)`, 
+        (err, rows, fields) => {
+            res.redirect('/admin');
+        }
+    );
 
-    conn.query(`alter table Bookings change time8 '${req.query.time8} tinytint)`
-    , (err,rows,fields) => {
-        res.redirect('/admin');
-    });
+    conn.query(`ALTER TABLE Availability change timeslot8 '${req.query.timeslot8} tinytint)`, 
+        (err, rows, fields) => {
+            res.redirect('/admin');
+        }
+    );
 
-    conn.query(`alter table Bookings change time9 '${req.query.time9} tinytint)`
-    , (err,rows,fields) => {
-        res.redirect('/admin');
-    });
+    conn.query(`ALTER TABLE Availability change timeslot9 '${req.query.timeslot9} tinytint)`, 
+        (err, rows, fields) => {
+            res.redirect('/admin');
+        }
+    );
 
-    conn.query(`alter table Bookings change time10 '${req.query.time10} tinytint)`
-    , (err,rows,fields) => {
-        res.redirect('/admin');
-    });
+    conn.query(`ALTER TABLE Availability change timeslot10 '${req.query.timeslot10} tinytint)`, 
+        (err, rows, fields) => {
+            res.redirect('/admin');
+        }
+    );
 
-    conn.query(`alter table Bookings change time2 '${req.query.time2} tinytint)`
-    , (err,rows,fields) => {
-        res.redirect('/admin');
-    });
-        
+    conn.query(`ALTER TABLE Availability change timeslot2 '${req.query.timeslot2} tinytint)`, 
+        (err, rows, fields) => {
+            res.redirect('/admin');
+        }
+    );
 
-    conn.end();
+    conn.end(); // End the connection
 })
 
-app.get("/admin", (req,res) => {
-    let conn = newConn();
-    conn.connect();
+app.get("/admin", (req, res) => {
+    let conn = newConn(); // Create the connection
+    conn.connect(); // Establish the connection
 
-    let content = `<form action='/change-times'>
-    <h2> Please Insert the Available Bookings (10 minute slots)<h2>
-    <h4> Available Bookings should not be changed after user data is submitted <h4>
-    <input name='time1', placeholder="HH:MM"/>
-    <input name='time2', placeholder="HH:MM"/>
-    <input name='time3', placeholder="HH:MM"/>
-    <input name='time4', placeholder="HH:MM"/>
-    <input name='time5', placeholder="HH:MM"/>
-    <input name='time6', placeholder="HH:MM"/>
-    <input name='time7', placeholder="HH:MM"/>
-    <input name='time8', placeholder="HH:MM"/>
-    <input name='time9', placeholder="HH:MM"/>
-    <input name='time10', placeholder="HH:MM"/>
+    let text = `<form action='/edit-timeslots'>
+    <h2> Please Insert the Available Availability (10 minute slots)<h2>
+    <h4> Available Availability should not be changed after user data is submitted <h4>
+    <input name='timeslot1', placeholder="HH:MM"/>
+    <input name='timeslot2', placeholder="HH:MM"/>
+    <input name='timeslot3', placeholder="HH:MM"/>
+    <input name='timeslot4', placeholder="HH:MM"/>
+    <input name='timeslot5', placeholder="HH:MM"/>
+    <input name='timeslot6', placeholder="HH:MM"/>
+    <input name='timeslot7', placeholder="HH:MM"/>
+    <input name='timeslot8', placeholder="HH:MM"/>
+    <input name='timeslot9', placeholder="HH:MM"/>
+    <input name='timeslot10', placeholder="HH:MM"/>
     <input type="submit" value="Submit">
 
     <h2>Guest View:</h2>
-    <a href='/times'>See Calendar</a>`
+    <a href='/calendar'>See Calendar</a>`
 
-    res.send(content);
+    res.send(text);
 
-    conn.end();
+    conn.end(); // End the connection
 })
 
-app.get('/times', (request, response) => {
-    let conn= newConn();
-    conn.connect();
+app.get('/calendar', (req, res) => {
+    let conn = newConn(); // Create the connection
+    conn.connect(); // Establish the connection
 
-    let content = ``;
+    let text = ``;
+    let timeslots;
 
-    // let columns;
-    // conn.query('SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = Bookings', (err,rows,fields) => {
-        
-    //     columns = rows;
+    conn.query('SELECT * FROM Availability', 
+        (err, rows, fields) => {
+            timeslots = rows;
 
-    //     for (p of columns) {
-    //         content += p.name;
-    //     }
-       
-        
-    // })
+            text += 
+                `<table>   
+                    <tr>
+                        <th>guestName</th>
+                        <th>Timeslot 1</th>
+                        <th>Timeslot 2</th>
+                        <th>Timeslot 3</th>
+                        <th>Timeslot 4</th>
+                        <th>Timeslot 5</th>
+                        <th>Timeslot 6</th>
+                        <th>Timeslot 7</th>
+                        <th>Timeslot 8</th>
+                        <th>Timeslot 9</th>
+                        <th>Timeslot 10</th>
+                    </tr>
+                    <tr>
+                    <form action='/add-availability'>
+                    <td><input name='guestName'/></td>
+                    <td><input name='timeslot1', type="checkbox", value = "1" /></td>
+                    <td><input name='timeslot2', type="checkbox", value = "1" /></td>
+                    <td><input name='timeslot3', type="checkbox", value = "1" /></td>
+                    <td><input name='timeslot4', type="checkbox", value = "1" /></td>
+                    <td><input name='timeslot5', type="checkbox", value = "1" /></td>
+                    <td><input name='timeslot6', type="checkbox", value = "1" /></td>
+                    <td><input name='timeslot7', type="checkbox", value = "1" /></td>
+                    <td><input name='timeslot8', type="checkbox", value = "1" /></td>
+                    <td><input name='timeslot9', type="checkbox", value = "1" /></td>
+                    <td><input name='timeslot10', type="checkbox", value = "1" /></td>
+                    <td><input type="submit" value="Submit"></td>
+                    </tr>
+                    `;
 
-    let timesList;
-    conn.query('select * from Bookings', (err,rows,fields) => {
-        
-        BookingsList = rows;
-
-        content += 
-            `<table>   
-                <tr>
-                    <th>Name</th>
-                    <th>Time 1</th>
-                    <th>Time 2</th>
-                    <th>Time 3</th>
-                    <th>Time 4</th>
-                    <th>Time 5</th>
-                    <th>Time 6</th>
-                    <th>Time 7</th>
-                    <th>Time 8</th>
-                    <th>Time 9</th>
-                    <th>Time 10</th>
-                </tr>
-                <tr>
-                <form action='/add-avail'>
-                <td><input name='name'/></td>
-                <td><input name='time1', type="checkbox", value = "1" /></td>
-                <td><input name='time2', type="checkbox", value = "1" /></td>
-                <td><input name='time3', type="checkbox", value = "1" /></td>
-                <td><input name='time4', type="checkbox", value = "1" /></td>
-                <td><input name='time5', type="checkbox", value = "1" /></td>
-                <td><input name='time6', type="checkbox", value = "1" /></td>
-                <td><input name='time7', type="checkbox", value = "1" /></td>
-                <td><input name='time8', type="checkbox", value = "1" /></td>
-                <td><input name='time9', type="checkbox", value = "1" /></td>
-                <td><input name='time10', type="checkbox", value = "1" /></td>
-                <td><input type="submit" value="Submit"></td>
-                </tr>
-    
+            for (p of timeslots) {
+                text += '<tr>';
+                text += '<td>';
+                text += p.guestName;
+                text += '</td>';
+                text += '<td>';
+                text += p.timeslot1;
+                text += '</td>';
+                text += '<td>';
+                text += p.timeslot2;
+                text += '</td>';
+                text += '<td>';
+                text += p.timeslot3;
+                text += '</td>';
+                text += '<td>';
+                text += p.timeslot4;
+                text += '</td>';
+                text += '<td>';
+                text += p.timeslot5;
+                text += '</td>';
+                text += '<td>';
+                text += p.timeslot6;
+                text += '</td>';
+                text += '<td>';
+                text += p.timeslot7;
+                text += '</td>';
+                text += '<td>';
+                text += p.timeslot8;
+                text += '</td>';
+                text += '<td>';
+                text += p.timeslot9;
+                text += '</td>';
+                text += '<td>';
+                text += p.timeslot10;
+                text += '</td>';
+                text += '</tr>';
                 
-                `;
+            }
+            text += '</table>';
+            res.send(text);
+        })
 
-        for (p of timesList) {
-            content += '<tr>';
-            content += '<td>';
-            content += p.name;
-            content += '</td>';
-            content += '<td>';
-            content += p.time1;
-            content += '</td>';
-            content += '<td>';
-            content += p.time2;
-            content += '</td>';
-            content += '<td>';
-            content += p.time3;
-            content += '</td>';
-            content += '<td>';
-            content += p.time4;
-            content += '</td>';
-            content += '<td>';
-            content += p.time5;
-            content += '</td>';
-            content += '<td>';
-            content += p.time6;
-            content += '</td>';
-            content += '<td>';
-            content += p.time7;
-            content += '</td>';
-            content += '<td>';
-            content += p.time8;
-            content += '</td>';
-            content += '<td>';
-            content += p.time9;
-            content += '</td>';
-            content += '<td>';
-            content += p.time10;
-            content += '</td>';
-            content += '</tr>';
-            
-        }
-        content += '</table>';
-        response.send(content);
-    })
-    
-
-
-    conn.end();
+    conn.end(); // End the connection
 });
 
 app.listen(80); // Make server listen to port 80 to avoid firewall configuration 
@@ -245,7 +274,7 @@ app.get('/add-booking', (req, res) => {
     conn.connect(); // Establish the connection
 
     //Retrieve value from the input and insert them into the table
-    conn.query(`insert into Bookings values ('${req.query.desc}')`, (err, rows, fields) => {});
+    conn.query(`insert into Availability values ('${req.query.desc}')`, (err, rows, fields) => {});
 
     conn.end(); // End the connection
 })
